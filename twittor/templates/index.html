@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %} 
+        <h1>Hello World!!,<a href="/{{current_user.username}}">{{current_user.username}}</a></h1>
+        <form action="" method="post">
+                {{ form.hidden_tag() }} <!-- wtf必須隱藏tag-->
+                <p>
+                        {{ form.tweet.label }}<br>
+                        {{ form.tweet(cols=50, rows=4) }}<br>
+                        {% for error in form.tweet.errors  %}
+                        <span style="color:red;">[{{ error }}] </span>
+                        {% endfor %} <!-- 檢查迴圈-->
+                </p>
+                <p>{{ form.submit() }}</p>
+                        
+        </form>
+ 
+
+        <!--for迴圈 帶入route.py裡設定的posts陣列資料-->
+        {% include '_tweets.html'%}
+        <!--叫入子模板-->
+        {% if prev_url %}
+        <a href="{{ prev_url }}">上一頁</a>
+        {% endif %}
+        {% if next_url %}
+        <a href="{{ next_url }}">下一頁</a>
+        {% endif %}
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="text-center col-lg-4"></div>
+    <div class="text-center col-lg-4">
+        <h1 class="h3 mb-3 font-weight-normal">Register</h1>
+        <!--尚未寫入數據的版本
+        <form action="" method="POST">
+            <p>
+                <label for="">UserName:</label>
+                <input type="text" name="" id="">
+            </p>
+            <p>
+                <label for="">Email:</label>
+                <input type="email" name="" id="">
+            </p>
+            <p>
+                <label for="">Password:</label>
+                <input type="password" name="" id="">
+            </p>
+            <p>
+                <label for="">Repeat Password:</label>
+                <input type="password" name="" id="">
+            </p>
+            <p><input type="submit" value="Register"></p>
+
+        </form>
+        -->
+        <form action="" method="POST">
+            {{ form.hidden_tag() }} <!-- wtf必須隱藏tag-->
+                <p>
+                    {{ form.username.label }}<br>
+                    {{ form.username() }}<br>
+                    {% for error in form.username.errors  %}
+                    <span style="color:red;">[{{ error }}] </span>
+                    {% endfor %} <!-- 使用者錯誤檢查迴圈-->
+                </p>
+                <p>
+                    {{ form.email.label }}<br>
+                    {{ form.email() }}<br>
+                    {% for error in form.email.errors  %}
+                    <span style="color:red;">[{{ error }}] </span>
+                    {% endfor %} <!-- email錯誤檢查迴圈-->
+                </p>
+                <p>
+                    {{ form.password.label }}<br>
+                    {{ form.password() }}<br>
+                    {% for error in form.password.errors  %}
+                    <span style="color:red;">[{{ error }}] </span>
+                    {% endfor %} <!-- password錯誤檢查迴圈-->
+                </p>
+                <p>
+                    {{ form.password2.label }}<br>
+                    {{ form.password2() }}<br>
+                    {% for error in form.password2.errors  %}
+                    <span style="color:red;">[{{ error }}] </span>
+                    {% endfor %} <!-- password重複錯誤檢查迴圈-->
+                </p>
+                <!--<p><input type="submit" value="Register"></p>-->
+                <button class="btn btn-lg btn-primary btn-block" style="max-width: 330px;" type="submit">註冊</button>
+            
+        </form>
+    </div>
+    <div class="text-center col-lg-4"></div>
+</div>
+{% endblock %}

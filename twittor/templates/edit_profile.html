@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %} 
+<div class="row">
+    <div class="text-center col-lg-4"></div>
+    <div class="text-center col-lg-4">
+        <h1>Edit {{current_user.username}} Profile</h1>
+
+        <form action="" method="POST">
+            {{ form.hidden_tag() }} <!-- wtf必須隱藏tag-->
+                <p>
+                    {{ form.about_me.label }}<br>
+                    {{ form.about_me(cols=50, rows=4) }}<br>
+                    {% for error in form.about_me.errors  %}
+                    <span style="color:red;">[{{ error }}] </span>
+                    {% endfor %} <!-- 檢查迴圈-->
+                </p>
+                <!--直接用程式的按鈕<p>{{ form.submit() }}</p>-->
+                <button class="btn btn-lg btn-primary btn-block" style="max-width: 330px;" type="submit">儲存修改</button>
+            
+            </form>
+    </div>
+    <div class="text-center col-lg-4"></div>
+</div>
+{% endblock %}

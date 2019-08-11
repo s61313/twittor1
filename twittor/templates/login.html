@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %} 
+
+<!--HTML原版改用form.py的方法取代-->
+<div class="row">
+    <div class="text-center col-lg-4"></div>
+    <div class="text-center col-lg-4">
+        <h1 class="h3 mb-3 font-weight-normal">Login</h1>
+        <form class="form-signin" action="" method="POST">
+            <!-- 
+            <p>
+                <label for="">UserName:</label>
+                <input type="text" name="" id="">
+            </p>
+            <p>
+                <label for="">Password:</label>
+                <input type="password" name="" id="">
+            </p>
+            <p>
+                <input type="checkbox" name="" id="">
+                <label for="">Remember Me</label>  
+            </p>
+            <p><input type="submit" value="Login"></p>
+        -->
+            <p>
+                {{ form.username.label }} 
+                {{ form.username() }}
+            </p>
+            <p>
+                {{ form.password.label }}
+                {{ form.password() }}
+            </p>
+            <p>
+                {{ form.remember_me.label }}
+                {{ form.remember_me() }}
+            </p>
+            <p>
+            <button class="btn btn-lg btn-primary btn-block" style="max-width: 330px;" type="submit">Login</button>   
+            <!--  {{ form.submit() }}  {{ form.submit.label }}-->
+            </p>
+
+            <p>
+                <a href="{{ url_for('register') }}">New User?</a>
+                <a href="{{ url_for('reset_password_request') }}">忘記密碼?</a>
+            </p>
+        </form>
+    </div>
+    <div class="text-center col-lg-4"></div>
+</div>
+
+{% endblock %}

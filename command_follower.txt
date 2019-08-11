@@ -1,0 +1,20 @@
+>>> from twittor import db, create_app
+>>> from twittor.models import User
+>>> app=create_app()
+>>> app.app_context().push()
+
+讓ID1用戶追蹤ID3用戶
+u1 = User.query.get(1)
+u3 = User.query.get(3)
+u1.followed.append(u3)
+db.session.commit()
+
+移除追蹤
+u1.followed.remove(u3)
+db.session.commit()
+
+查詢u1追蹤的所有人
+u1.followed.all()
+
+查詢u1被那些人追蹤 (追蹤u1的所有人)
+u1.followers.all()
