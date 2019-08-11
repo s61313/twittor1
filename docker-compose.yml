@@ -1,0 +1,20 @@
+version: '2'
+
+services:
+  web:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=mysql+pymysql://root:root@52.193.65.204/twittor
+      - MAIL_USERNAME=photour.tw@gmail.com
+      - MAIL_PASSWORD=aMan1338
+
+  nginx:
+    restart: always
+    build: ./nginx/
+    ports:
+      - "80:80"
+    links:
+      - web
