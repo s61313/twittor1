@@ -1,0 +1,90 @@
+直接用命令與資料庫互動 透過SQLA....
+在pyhton TERMINAL下 
+>>> from twittor import db,create_app     
+>>> app = create_app()
+>>> db
+<SQLAlchemy engine=None>  還沒有db路徑所以為空值
+>>> app.app_context().push()
+>>> db   檢查資料庫路徑
+<SQLAlchemy engine=sqlite:///D:\Users\Documents\python-test\web-flask\twittor\twittor.db>
+>>> from twittor.models import User, Tweet
+
+創建USER
+>>> u=User(username='admin',email='s61313@admin.com') 創建USER
+>>> db.session.add(u)
+>>> db.session.commit()
+>>> u=User(username='test1',email='test1@admin.com') 創建USER2
+>>> db.session.add(u)
+>>> db.session.commit()
+>>> User.query.all()   打印所有user
+[id=1,username=admin, email=s61313@admin.com, password_hash=None, id=2,username=test1, email=test1@admin.com, password_hash=None]
+>>> User.query.get(1)  篩選id=1的user
+id=1,username=admin, email=s61313@admin.com, password_hash=None
+
+創建貼文
+>>> t=Tweet(body="this is the first one",user_id=1)  
+>>> db.session.add(t)
+>>> db.session.commit()
+
+查貼文
+>>> Tweet.query.all() 
+[tweet=this is the first one,create at 2019-07-27 09:54:20.531615]
+>>> Tweet.query.get(1)
+tweet=this is the first one,create at 2019-07-27 09:54:20.531615
+取回user id1所有貼文
+>>> Tweet.query.filter_by(user_id=1).all()
+
+u_admin = User.query.filter_by(id=1).first()
+u_admin
+根據author篩選 特定用戶的所有推文
+ (已經定義在models的User方法裡的tweets = db.relationship("Tweet",backref="author",lazy="dynamic"))
+
+Tweet.query.filter_by(author=u_admin).all()
+
+t1=Tweet.query.filter_by(author=u_admin).first()
+t1.author 
+從推文快速取得發文的人
+
+u1=t1.author 
+u1.tweets.all()
+從人快速列出他所有的推文
+
+
+刪除貼文
+>>> t=Tweet.query.get(1)
+tweet=this is the first one,create at 2019-07-27 09:54:20.531615
+>>> db.session.delete(t)
+>>> db.session.commit()
+
+修改資料
+>>> u=User.query.get(2)
+>>> u
+id=2,username=test1, email=test1@admin.com, password_hash=None
+>>> u.email="edit01@gmail.com"
+>>> db.session.commit()
+>>> u
+id=2,username=test1, email=edit01@gmail.com, password_hash=None
+>>>
+
+清理全部數據
+>>> tweet=Tweet.query.all()
+>>> for t in tweet:
+...     db.session.delete(t)
+...
+>>> users=User.query.all()
+>>> for u in users:
+...     db.session.delete(u)
+...
+>>> db.session.commit()
+
+檢查數據
+>>> Tweet.query.all()
+[]
+>>> User.query.all()
+[]
+
+開頭必備基礎宣告
+>>> from twittor import db,create_app  
+>>> from twittor.models import User, Tweet  
+>>> app = create_app()
+>>> app.app_context().push()

@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width-device-width">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        {% if title %}
+        <title>Flask Test {{title}}</title>
+        {% else %}
+        <title> No Title ?!</title>
+        {% endif %}
+        <!--if判斷式 如果沒有設定title的話就用預設值-->
+    </head>
+    <body style="background-color: #e3e3e7">
+        <div class="sticky-top d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+                
+                <h5 class="my-0 mr-md-auto font-weight-normal">
+                    <a class="p-2 text-dark" href="{{ url_for('index')}}">Twittor</a>
+                </h5>
+                
+                <nav class="my-2 my-md-0 mr-md-3">
+                <a class="p-2 text-dark" href="{{ url_for('index')}}">Home</a>
+                <a class="p-2 text-dark" href="{{ url_for('explore')}}">Explore</a>
+                <a class="p-2 text-dark" href="#">Support</a>
+                <a class="p-2 text-dark" href="#">Pricing</a>
+                </nav>
+                {% if current_user.is_anonymous %}
+                <a class="btn btn-outline-primary" href="{{ url_for('login')}}">Login</a>
+                {% else %}
+                <a class="btn btn-outline-primary" href="{{ url_for('logout')}}">Logout</a>
+                {% endif %}
+            </div>
+        <!--"/""/login"改用url_for()避免未來init改路徑所有程式都要改-->
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+
+        {% block content %} {% endblock %}
+        <!--填入index.heml或是其他頁面的代碼-->
+
+    </body>
+</html>

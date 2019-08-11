@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %} 
+ 
+    {% include '_tweets.html'%}
+    <!--叫入子模板-->
+    {% if prev_url %}
+    <a href="{{ prev_url }}">上一頁</a>
+    {% endif %}
+    {% if next_url %}
+    <a href="{{ next_url }}">下一頁</a>
+    {% endif %}  
+
+{% endblock %}
+

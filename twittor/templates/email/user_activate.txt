@@ -1,0 +1,9 @@
+Dear {{ username }}
+
+請點擊以下連結驗證信箱
+
+{{ url_user_activate }}
+
+Thanks
+
+Your friends at Twittor

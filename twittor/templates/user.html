@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %} 
+    <table>
+        <tr>
+            <td>    
+                <img src="{{ user.avatar(200) }}" alt="">
+            </td>
+            <td>    
+                <h1>{{user.username}}</h1>
+                <form action="" method="post"> 
+                    {% if user == current_user %}
+                        {% if current_user.is_activated !=1 %}
+                        <input class="btn btn-warning" type="submit" name="request_button" value="驗證信箱">
+                        {% else %}
+                        <span class="badge badge-success">已驗證</span>
+                        {% endif %}
+                    {% endif %}
+                </form>
+                <p>Follower追蹤我:{{ user.followers.count() }} Following {{ user.followed.count() }}</p>
+                <form action="" method="post"> 
+                    {% if user != current_user %}
+                    {% if current_user.is_following(user) %}
+                    <input class="btn btn-outline-primary" type="submit" name="request_button" value="Unfollow">
+                    {% else %}
+                    <input class="btn btn-outline-primary" type="submit" name="request_button" value="Follow">
+                    {% endif %}
+                    {% endif %}
+                </form>
+
+                {% if user.about_me %}
+                <p>關於我:{{user.about_me}}</p> 
+                {% else %}
+                <p>尚未輸入自我的介紹 </p>           
+                {% endif %}
+                
+                {% if user==current_user %}
+                <p class="btn btn-outline-primary"><a href="{{ url_for('edit_profile') }}">編輯</a>
+                {% endif %}
+                {% if user.create_time %}
+                <p>加入時間{{user.create_time}}</p>
+                {% endif %}
+                
+            </td>
+        </tr>
+    </table>        
+    {% include '_tweets.html'%}
+    <!--叫入子模板-->
+    {% if prev_url %}
+    <a href="{{ prev_url }}">上一頁</a>
+    {% endif %}
+    {% if next_url %}
+    <a href="{{ next_url }}">下一頁</a>
+    {% endif %}  
+
+{% endblock %}
+
